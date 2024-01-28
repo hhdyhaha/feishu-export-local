@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {type Ref, ref} from 'vue'
 import {Search} from '@element-plus/icons-vue'
-import {getFolderListApi} from "@/api";
+import {exportTaskApi, folderMetaApi, getFolderListApi} from "@/api";
 
 const userAccessToken: Ref<string> = ref('')
 
@@ -31,14 +31,14 @@ function getFolderList() {
     return
   } else {
     // 获取文件夹列表
-    getFiles(params,headers)
+    getFiles(params, headers)
   }
 
 }
 
 // 递归遍历文件夹
-function getFiles(params, headers) {
-  getFolderListApi(params, headers).then(item => {
+function getFiles(params: object, headers: object, parentId: string = '') {
+  return getFolderListApi(params, headers).then(async item => {
     // 判断返回数据是否是0，如果是0表示成功，非0表示失败
     if (item.data.code === 0) {
       const files = item.data.data.files
@@ -47,10 +47,19 @@ function getFiles(params, headers) {
         for (let i = 0; i < files.length; i++) {
           if (files[i].type === 'folder') {
             console.log('是文件夹', files[i])
-            params.folder_token = files[i].token
-            getFiles(params, headers)
+            params['folder_token'] = files[i].token
+            await getFiles(params, headers, files[i].parent_token)
           } else if (files[i].type === 'docx') {
             console.log('是新版文档', files[i])
+            const params = {
+              "file_extension": "docx",
+              "token": files[i].token,
+              "type": "docx"
+            }
+            // 获取文件夹元信息
+            await getFolderMeta(files[i].parent_token, headers)
+            // 创建导出任务
+            await createExportTask(params, headers)
           }
         }
       } else {
@@ -66,6 +75,41 @@ function getFiles(params, headers) {
       })
     }
   })
+}
+
+// 获取文件夹元信息
+function getFolderMeta(folderToken: string, headers: object) {
+  return folderMetaApi(folderToken, headers).then(res => {
+    if (res.data.code === 0) {
+      console.log('res文件元信息',res)
+      ElMessage({
+        message: '获取文件夹元信息成功',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: res.data.msg,
+        type: 'error'
+      })
+    }
+  })
+}
+
+// 创建导出任务
+function createExportTask(params: object, headers: object) {
+  return exportTaskApi(params, headers).then(res => {
+    if (res.data.code === 0) {
+      console.log('导出任务创建成功')
+      // 获取任务状态
+      ElMessage.success('导出任务创建成功')
+    } else {
+      ElMessage({type: 'error', message: res.data.message})
+    }
+  })
+}
+
+// 将文件复制到指定文件夹中
+function copyFilesToFolder(files, folderId) {
 }
 
 </script>

@@ -33,5 +33,22 @@ export const exportTaskApi = (params?:object,headers?:object)=>{
     })
 }
 // 查询导出任务结果
-
+export const exportTaskResultApi = (params?:object,ticket:string,headers?:object)=>{
+    return axiosInstance({
+        url:`/export_tasks/${ticket}`,
+        method:'get',
+        params: params,
+        headers: headers,
+        requestBaseUrl:'V1'
+    })
+}
 // 下载导出文件
+export const exportFileApi = (file_token:string,headers?:object)=>{
+    return axiosInstance({
+        url:`/export_tasks/file/${file_token}/download`,
+        method:'get',
+        responseType:'blob',
+        headers: headers,
+        requestBaseUrl:'V1'
+    })
+}

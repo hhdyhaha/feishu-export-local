@@ -1,40 +1,17 @@
-# feishu_export_local
+# 注意，标题里不能带‘开’，否则会下载失败；注意，标题里不能带‘开’，否则会下载失败；注意，标题里不能带‘开’，否则会下载失败（我使用postman和python发送请求都能下载，但是axios只要标题带“开”字，就下载不了，不知道为啥）
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+### 1. 安装依赖
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2. 运行
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 3. 去下面链接获取到user_access_token，放到运行起来的项目中，点击下载
 
-```sh
-npm run build
-```
+https://open.feishu.cn/api-explorer/cli_a52b4df38b7b500c?apiName=create&project=authen&resource=oidc.access_token&version=v1

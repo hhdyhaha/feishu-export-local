@@ -1,5 +1,3 @@
-import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig, loadEnv ,type UserConfigExport, type ConfigEnv} from 'vite'
 
 import vue from '@vitejs/plugin-vue'
@@ -7,9 +5,10 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(({mode})=>{
+export default defineConfig(({command, mode})=>{
   const env = loadEnv(mode, process.cwd())
   return {
     base:'./',
@@ -22,8 +21,7 @@ export default defineConfig(({mode})=>{
         [env.VITE_APP_BASE_API]: {
           target: 'https://open.feishu.cn',
           changeOrigin: true,
-          secure:false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         },
       },
     },
@@ -39,7 +37,7 @@ export default defineConfig(({mode})=>{
     ],
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': path.resolve(__dirname, './src')
       }
     }
   }

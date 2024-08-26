@@ -2,7 +2,7 @@ import axios, {type InternalAxiosRequestConfig, type AxiosInstance, type AxiosRe
 
 // 通过create方法,创建axios实例
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: '/api/open-apis/drive',
+    baseURL: `${import.meta.env.VITE_APP_BASE_API} + /open-apis/drive`,
     timeout: 5000,
     withCredentials: false
 });

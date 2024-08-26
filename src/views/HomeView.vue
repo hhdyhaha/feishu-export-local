@@ -170,7 +170,7 @@ function downloadFile(file_token: string, headers: object, fileName: string, fil
       </el-button
       >
     </div>
-    <el-card>
+    <el-card style="margin-top: 50px">
       <div>
         注意，标题里不能带‘开’，否则会下载失败；注意，标题里不能带‘开’，否则会下载失败；注意，标题里不能带‘开’，否则会下载失败（我使用postman和python发送请求都能下载，但是axios只要标题带“开”字，就下载不了，后续有时间再解决！）
       </div>
